@@ -1,5 +1,4 @@
 from os import system, chdir
-
 from packets import packet_name
 
 

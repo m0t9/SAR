@@ -6,12 +6,15 @@ class DatabaseTaker:
         self.db = connect('res/phones.db')
         self.cursor = self.db.cursor()
 
+        self.models_list = ['Xiaomi', 'Samsung']
+
     # TAKE LIST OF AVAILABLE SYSTEM APPS ON PHONE MODEL
     def get_phone_apps(self, phone_model):
         try:
             apps_list = [item[0] for item in (
                 self.cursor.execute(
-                    '''SELECT app_name FROM app_packets WHERE ''' + phone_model + ''' = 1''').fetchall())]
+                    '''SELECT app_name FROM app_packets WHERE ''' + phone_model + ''' = 1 
+                    ORDER BY app_name''').fetchall())]
             return apps_list
         except OperationalError:
             return []

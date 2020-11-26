@@ -5,3 +5,7 @@ def decode_error(code):
         return 'Не удалось удалить, похоже, что устройство не подключено, или на нем не включена отладка по USB'
     elif code == 0:
         return 'Приложение успешно удалено'
+
+def make_verdict(app_name, error):
+    verdict = app_name + ': ' + decode_error(error)
+    return verdict

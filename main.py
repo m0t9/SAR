@@ -1,16 +1,26 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5 import uic, QtGui, QtCore, QtWidgets, Qt
+from PyQt5 import uic
 from cmd import CommandLine
 from db_funcs import DatabaseTaker
 from errors import decode_error, make_verdict
+
+
+class ReferenceWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        uic.loadUi('reference.ui', self)
+
+        self.warning.setStyleSheet('color:red')
 
 
 class App(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('ui.ui', self)
+
+        self.reference_window = ReferenceWindow()
 
         self.dbt = DatabaseTaker()
         self.cmd = CommandLine()
@@ -25,13 +35,16 @@ class App(QMainWindow):
         self.load_compatible_apps(0)
 
         self.apps.activated.connect(self.add_delete_app)
-        self.remove_apps_button.clicked.connect(self.remove_choosed_apps)
+        self.remove_apps_button.setStyleSheet('color:red')
+        self.remove_apps_button.clicked.connect(self.remove_selected_apps)
 
+        self.reference.setStyleSheet('border:0')
+        self.reference.clicked.connect(self.show_reference)
+
+        self.clear_selected_button.clicked.connect(self.clear_selected)
 
     def load_compatible_apps(self, index):
-        self.progress_bar.setValue(0)
-        self.remove.clear()
-        self.progress_log.clear()
+        self.clear_selected()
         self.compatible_apps.clear()
         self.apps.clear()
 
@@ -42,7 +55,6 @@ class App(QMainWindow):
         self.apps.addItems(self.compatible_apps)
 
     def add_delete_app(self, index):
-        self.progress_bar.setValue(0)
         self.progress_log.clear()
         application = self.compatible_apps[index]
         if application in self.remove:
@@ -51,25 +63,23 @@ class App(QMainWindow):
             self.remove.append(application)
         self.progress_log.setPlainText('\n'.join(self.remove))
 
-    def remove_choosed_apps(self):
+    def remove_selected_apps(self):
         self.progress_log.clear()
-        result = list()
 
         full = len(self.remove)
-        current = 0
-
         if full:
-            self.progress_bar.setValue(current // full * 100)
             for item in self.remove:
                 verdict = make_verdict(item,
                                        self.cmd.remove_app(item, self.current_phone_model, self.dbt))
-                result.append(verdict)
-                current += 1
-                self.progress_bar.setValue(current // full * 100)
-
-            self.progress_log.appendPlainText('\n\n'.join(result))
+                self.progress_log.appendPlainText(verdict + '\n')
             self.remove.clear()
-            result.clear()
+
+    def show_reference(self):
+        self.reference_window.show()
+
+    def clear_selected(self):
+        self.remove.clear()
+        self.progress_log.clear()
 
 
 if __name__ == '__main__':

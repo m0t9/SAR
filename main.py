@@ -61,6 +61,8 @@ class MainWindow(QMainWindow):
 
     def add_delete_app(self, index):
         self.verdict_log.clear()
+        self.verdict_log.setStyleSheet('color:#000000')
+
         application = self.compatible_apps[index]
         if application in self.remove:
             self.remove.pop(self.remove.index(application))
@@ -86,6 +88,7 @@ class MainWindow(QMainWindow):
     def clear_selected(self):
         self.remove.clear()
         self.verdict_log.clear()
+        self.verdict_log.setStyleSheet('color:#000000')
 
 
 if __name__ == '__main__':

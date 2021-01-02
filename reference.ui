@@ -211,7 +211,7 @@
      </font>
     </property>
     <property name="text">
-     <string>SystemAppRemover 2020</string>
+     <string>SystemAppRemover 2020-2021</string>
     </property>
     <property name="textFormat">
      <enum>Qt::PlainText</enum>

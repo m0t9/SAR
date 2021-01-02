@@ -79,22 +79,6 @@
      <string>Устройство</string>
     </property>
    </widget>
-   <widget class="QPlainTextEdit" name="progress_log">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>120</y>
-      <width>431</width>
-      <height>161</height>
-     </rect>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
-   </widget>
    <widget class="QPushButton" name="remove_apps_button">
     <property name="geometry">
      <rect>
@@ -174,6 +158,19 @@
     </property>
     <property name="text">
      <string>Очистить выбранное</string>
+    </property>
+   </widget>
+   <widget class="QTextEdit" name="verdict_log">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>120</y>
+      <width>431</width>
+      <height>161</height>
+     </rect>
+    </property>
+    <property name="readOnly">
+     <bool>true</bool>
     </property>
    </widget>
   </widget>

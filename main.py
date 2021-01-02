@@ -9,16 +9,17 @@ from db_funcs import DatabaseTaker
 from errors import make_verdict
 
 
+# REFERENCE WINDOW CLASS
 class ReferenceWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('reference.ui', self)
         self.setWindowIcon(QIcon('res/icon.ico'))
-
         self.warning.setStyleSheet('color:red')
 
 
-class App(QMainWindow):
+# MAIN WINDOW CLASS
+class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('ui.ui', self)
@@ -59,23 +60,24 @@ class App(QMainWindow):
         self.apps.addItems(self.compatible_apps)
 
     def add_delete_app(self, index):
-        self.progress_log.clear()
+        self.verdict_log.clear()
         application = self.compatible_apps[index]
         if application in self.remove:
             self.remove.pop(self.remove.index(application))
         else:
             self.remove.append(application)
-        self.progress_log.setPlainText('\n'.join(self.remove))
+        self.verdict_log.append('\n'.join(self.remove))
 
     def remove_selected_apps(self):
-        self.progress_log.clear()
+        self.verdict_log.clear()
 
         full = len(self.remove)
         if full:
             for item in self.remove:
                 verdict = make_verdict(item,
                                        self.cmd.remove_app(item, self.current_phone_model, self.dbt))
-                self.progress_log.appendPlainText(verdict + '\n')
+                self.verdict_log.append(verdict)
+                self.verdict_log.append('<span></span>')
             self.remove.clear()
 
     def show_reference(self):
@@ -83,11 +85,11 @@ class App(QMainWindow):
 
     def clear_selected(self):
         self.remove.clear()
-        self.progress_log.clear()
+        self.verdict_log.clear()
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = App()
+    ex = MainWindow()
     ex.show()
     sys.exit(app.exec())

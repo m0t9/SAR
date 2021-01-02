@@ -2,7 +2,7 @@ import sys
 
 from PyQt5 import uic
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 
 from cmd import CommandLine
 from db_funcs import DatabaseTaker
@@ -62,6 +62,7 @@ class MainWindow(QMainWindow):
     def add_delete_app(self, index):
         self.verdict_log.clear()
         self.verdict_log.setStyleSheet('color:#000000')
+        self.clear_selected_button.setText('Очистить выбранное')
 
         application = self.compatible_apps[index]
         if application in self.remove:
@@ -71,24 +72,36 @@ class MainWindow(QMainWindow):
         self.verdict_log.append('\n'.join(self.remove))
 
     def remove_selected_apps(self):
-        self.verdict_log.clear()
-
         full = len(self.remove)
         if full:
-            for item in self.remove:
-                verdict = make_verdict(item,
-                                       self.cmd.remove_app(item, self.current_phone_model, self.dbt))
-                self.verdict_log.append(verdict)
-                self.verdict_log.append('<span></span>')
-            self.remove.clear()
+            if self.confirmation():
+                self.verdict_log.clear()
+                for item in self.remove:
+                    verdict = make_verdict(item,
+                                           self.cmd.remove_app(item, self.current_phone_model, self.dbt))
+                    self.verdict_log.append(verdict)
+                    self.verdict_log.append('<span></span>')
+                self.remove.clear()
+                self.clear_selected_button.setText('Очистить журнал')
 
     def show_reference(self):
         self.reference_window.show()
 
     def clear_selected(self):
-        self.remove.clear()
+        self.clear_selected_button.setText('Очистить выбранное')
         self.verdict_log.clear()
+        self.remove.clear()
         self.verdict_log.setStyleSheet('color:#000000')
+
+    def confirmation(self):
+        text = 'Вы действительно хотите удалить выбранные приложения?'
+        answer = QMessageBox.question(self, 'Подтверждение', text,
+                                      QMessageBox.Yes,
+                                      QMessageBox.No)
+        if answer == QMessageBox.Yes:
+            return True
+        else:
+            return False
 
 
 if __name__ == '__main__':

@@ -94,14 +94,18 @@ class MainWindow(QMainWindow):
         self.verdict_log.setStyleSheet('color:#000000')
 
     def confirmation(self):
-        text = 'Вы действительно хотите удалить выбранные приложения?'
-        answer = QMessageBox.question(self, 'Подтверждение', text,
-                                      QMessageBox.Yes,
-                                      QMessageBox.No)
+        answer = QMessageBox.warning(self, 'Подтверждение', self.make_message(),
+                                     QMessageBox.Yes,
+                                     QMessageBox.No)
         if answer == QMessageBox.Yes:
             return True
         else:
             return False
+
+    def make_message(self):
+        text = 'Вы действительно хотите удалить '
+        text += ', '.join(self.remove) + ' с вашего устройства?'
+        return text
 
 
 if __name__ == '__main__':

@@ -104,7 +104,7 @@ class MainWindow(QMainWindow):
 
     def make_message(self):
         text = 'Вы действительно хотите удалить '
-        text += ', '.join(self.remove) + ' с вашего устройства?'
+        text += ', '.join(self.remove) + ' с Вашего устройства?'
         return text
 
 

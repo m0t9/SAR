@@ -1,12 +1,12 @@
 from os import system, chdir
 from subprocess import check_output, CalledProcessError
-from db_funcs import DatabaseTaker
 
 
 class CommandLine:
     # SET ON
     def __init__(self):
         chdir('adb')
+        system('adb start-server')
 
     # RUN CMD
     def run(self, command):

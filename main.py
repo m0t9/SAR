@@ -75,14 +75,7 @@ class MainWindow(QMainWindow):
         full = len(self.remove)
         if full:
             if self.confirmation():
-                self.verdict_log.clear()
-                for item in self.remove:
-                    verdict = make_verdict(item,
-                                           self.cmd.remove_app(item, self.current_phone_model, self.dbt))
-                    self.verdict_log.append(verdict)
-                    self.verdict_log.append('<span></span>')
-                self.remove.clear()
-                self.clear_selected_button.setText('Очистить журнал')
+                self.removal_process()
 
     def show_reference(self):
         self.reference_window.show()
@@ -94,9 +87,9 @@ class MainWindow(QMainWindow):
         self.verdict_log.setStyleSheet('color:#000000')
 
     def confirmation(self):
-        answer = QMessageBox.warning(self, 'Подтверждение', self.make_message(),
-                                     QMessageBox.Yes,
-                                     QMessageBox.No)
+        answer = QMessageBox.question(self, 'Подтверждение', self.make_message(),
+                                      QMessageBox.Yes,
+                                      QMessageBox.No)
         if answer == QMessageBox.Yes:
             return True
         else:
@@ -106,6 +99,16 @@ class MainWindow(QMainWindow):
         text = 'Вы действительно хотите удалить '
         text += ', '.join(self.remove) + ' с Вашего устройства?'
         return text
+
+    def removal_process(self):
+        self.verdict_log.clear()
+        for item in self.remove:
+            verdict = make_verdict(item,
+                                   self.cmd.remove_app(item, self.current_phone_model, self.dbt))
+            self.verdict_log.append(verdict)
+            self.verdict_log.append('<span></span>')
+        self.remove.clear()
+        self.clear_selected_button.setText('Очистить журнал')
 
 
 if __name__ == '__main__':

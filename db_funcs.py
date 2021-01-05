@@ -5,8 +5,8 @@ class DatabaseTaker:
     def __init__(self):
         self.db = connect('res/phones.db')
         self.cursor = self.db.cursor()
-
-        self.models_list = ['Xiaomi', 'Samsung']
+        self.models_list = sorted([i[0].capitalize()
+                                   for i in self.cursor.execute('SELECT * FROM app_packets').description[2:]])
 
     # TAKE LIST OF AVAILABLE SYSTEM APPS ON PHONE MODEL
     def get_phone_apps(self, phone_model):

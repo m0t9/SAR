@@ -2,8 +2,10 @@
 
 ## Installation
 
+You should download and unzip this repository to desired folder, open it.
+
 #### For Windows users
-* First of all, you need to install the adb drivers via `DriverInstaller.msi`. Just launch it.
+* You need to install the adb drivers via `DriverInstaller.msi`. Just launch it.
 
 #### For Linux users
 * You should install adb on your PC using `sudo apt install adb` command in terminal.

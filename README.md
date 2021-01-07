@@ -1,15 +1,24 @@
-SAR (System App Remover) - this is an application with which You can remove system programs from your Android device.
+# SAR (System App Remover) - this is an application with which You can remove system programs from your Android device.
 
-WINDOWS - First of all, you need to install the adb drivers via "DriverInstaller.msi".
-LINUX - You should install adb on your PC using "sudo apt install adb" command in terminal.
+## Installation
 
-The next step is to enable developer mode on your phone. Through it, you must enable USB-debugging.
+#### For Windows users
+* First of all, you need to install the adb drivers via `DriverInstaller.msi`. Just launch it.
 
-Install the required packages from the "requirements.txt", run "main.py".
-Connect your device to your computer and...
+#### For Linux users
+* You should install adb on your PC using `sudo apt install adb` command in terminal.
 
-Choose your phone model in corresponding menu, apps, which you want remove (a second click on the application will remove it from the list) and press "Remove" button. After completing the removal process, the results will be displayed in the log.
+## Preparing your phone
 
-If you need help, just click on the program logo.
+The next step is to enable **developer mode** on your phone. Through it, you must enable **USB-debugging**.
+Connect your device to your computer using USB cable.
 
-All actions You perform at Your own peril and risk.
+## Running the program
+
+* Install the required modules using the `pip3 install -r requirements.txt` command in terminal in folder with program.
+* Run the program using the `python3 main.py` command in terminal in folder with *SystemAppRemover*.
+* Choose your phone model in corresponding menu, apps, which you want remove (a second click on the application will remove it from the list) and press "Remove" button. After completing the removal process, the results will be displayed in the log.
+
+If you need help, just click on the program logo. 
+
+**All actions You perform at Your own peril and risk.**

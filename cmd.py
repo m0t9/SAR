@@ -9,6 +9,10 @@ class CommandLine:
         chdir('adb')  # CHANGING DIRECTORY FOR WINDOWS
         call(['adb', 'start-server'])
 
+    # KILL ADB SERVER ON EXIT
+    def close_adb(self):
+        call(['adb', 'kill-server'])
+
     # REMOVE SELECTED APP
     def remove_app(self, app_name, phone_model, dbt):
         is_connected = self.connection_check()

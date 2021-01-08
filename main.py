@@ -110,6 +110,10 @@ class MainWindow(QMainWindow):
         self.remove.clear()
         self.clear_selected_button.setText('Очистить журнал')
 
+    def closeEvent(self, event):
+        self.reference_window.close()
+        self.cmd.close_adb()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

@@ -82,15 +82,15 @@
    <widget class="QPushButton" name="remove_apps_button">
     <property name="geometry">
      <rect>
-      <x>230</x>
+      <x>160</x>
       <y>290</y>
-      <width>211</width>
+      <width>140</width>
       <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>10</pointsize>
      </font>
     </property>
     <property name="text">
@@ -147,13 +147,13 @@
      <rect>
       <x>10</x>
       <y>290</y>
-      <width>211</width>
+      <width>140</width>
       <height>31</height>
      </rect>
     </property>
     <property name="font">
      <font>
-      <pointsize>12</pointsize>
+      <pointsize>10</pointsize>
      </font>
     </property>
     <property name="text">
@@ -171,6 +171,22 @@
     </property>
     <property name="readOnly">
      <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QProgressBar" name="progress_bar">
+    <property name="geometry">
+     <rect>
+      <x>309</x>
+      <y>291</y>
+      <width>131</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="textVisible">
+     <bool>false</bool>
     </property>
    </widget>
   </widget>

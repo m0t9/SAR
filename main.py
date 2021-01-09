@@ -1,12 +1,18 @@
 import sys
 
 from PyQt5 import uic
+from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 
 from cmd import CommandLine
 from db_funcs import DatabaseTaker
 from errors import make_verdict
+
+
+# SIGNAL FOR PROGRESS BAR
+class ProgressBarSignal(QObject):
+    valueUpdated = pyqtSignal(int)
 
 
 # REFERENCE WINDOW CLASS
@@ -25,11 +31,17 @@ class MainWindow(QMainWindow):
         uic.loadUi('ui.ui', self)
         self.setWindowIcon(QIcon('res/icon.ico'))
 
+        # ASSEMBLING REFERENCE
         self.reference_window = ReferenceWindow()
 
+        self.reference.setStyleSheet('border:0')
+        self.reference.clicked.connect(self.show_reference)
+
+        # ASSEMBLING COMMAND LINE AND DATABASE TAKER
         self.dbt = DatabaseTaker()
         self.cmd = CommandLine()
 
+        # LOADING PHONE MODELS AND COMPATIBLE APPS
         self.model.addItems(self.dbt.models_list)
         self.current_phone_model = self.dbt.models_list[0]
 
@@ -43,10 +55,14 @@ class MainWindow(QMainWindow):
         self.remove_apps_button.setStyleSheet('color:red')
         self.remove_apps_button.clicked.connect(self.remove_selected_apps)
 
-        self.reference.setStyleSheet('border:0')
-        self.reference.clicked.connect(self.show_reference)
-
         self.clear_selected_button.clicked.connect(self.clear_selected)
+
+        # ASSEMBLING PROGRESS BAR SIGNAL
+        self.pb_signal = ProgressBarSignal(self)
+        self.pb_signal.valueUpdated.connect(self.update_pb)
+
+        self.current_load = 0
+        self.target_load = 0
 
     def load_compatible_apps(self, index):
         self.clear_selected()
@@ -60,6 +76,10 @@ class MainWindow(QMainWindow):
         self.apps.addItems(self.compatible_apps)
 
     def add_delete_app(self, index):
+        self.current_load = 0
+        self.target_load = 0
+        self.update_pb()
+
         self.verdict_log.clear()
         self.verdict_log.setStyleSheet('color:#000000')
         self.clear_selected_button.setText('Очистить выбранное')
@@ -69,11 +89,13 @@ class MainWindow(QMainWindow):
             self.remove.pop(self.remove.index(application))
         else:
             self.remove.append(application)
+
         self.verdict_log.append('\n'.join(self.remove))
 
     def remove_selected_apps(self):
         full = len(self.remove)
         if full:
+            self.target_load = full
             if self.confirmation():
                 self.removal_process()
 
@@ -81,7 +103,12 @@ class MainWindow(QMainWindow):
         self.reference_window.show()
 
     def clear_selected(self):
+        self.current_load = 0
+        self.target_load = 0
+        self.update_pb()
+
         self.clear_selected_button.setText('Очистить выбранное')
+
         self.verdict_log.clear()
         self.remove.clear()
         self.verdict_log.setStyleSheet('color:#000000')
@@ -107,12 +134,21 @@ class MainWindow(QMainWindow):
                                    self.cmd.remove_app(item, self.current_phone_model, self.dbt))
             self.verdict_log.append(verdict)
             self.verdict_log.append('<span></span>')
+
+            self.current_load += 1
+            self.pb_signal.valueUpdated.emit(1)
         self.remove.clear()
         self.clear_selected_button.setText('Очистить журнал')
 
     def closeEvent(self, event):
         self.reference_window.close()
         self.cmd.close_adb()
+
+    def update_pb(self):
+        if not self.current_load:
+            self.progress_bar.setValue(0)
+        else:
+            self.progress_bar.setValue(int(100 * self.current_load / self.target_load))
 
 
 if __name__ == '__main__':

@@ -1,8 +1,11 @@
+from os import chdir
 from sqlite3 import connect, OperationalError
+from subprocess import call
 
 
 class DatabaseTaker:
     def __init__(self):
+        self.load_database()
         self.db = connect('res/phones.db')
         self.cursor = self.db.cursor()
         self.models_list = sorted([i[0].capitalize()
@@ -30,3 +33,10 @@ class DatabaseTaker:
             return ''
         except OperationalError:
             return ''
+
+    # DB LOADER
+    @staticmethod
+    def load_database():
+        chdir('res')
+        call(['curl', '-OL', 'https://raw.githubusercontent.com/m0t9/SAR/master/res/phones.db'])
+        chdir('..')

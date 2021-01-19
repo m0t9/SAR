@@ -41,6 +41,14 @@ class MainWindow(QMainWindow):
         self.dbt = DatabaseTaker()
         self.cmd = CommandLine()
 
+        # CHECKING DB STATUS
+        if self.dbt.newest_db:
+            self.database_status.setText('Подключена новейшая база данных')
+            self.database_status.setStyleSheet('color:#00ff00')
+        else:
+            self.database_status.setText('Подключена устаревшая база данных')
+            self.database_status.setStyleSheet('color:#ff0000')
+
         # LOADING PHONE MODELS AND COMPATIBLE APPS
         self.model.addItems(self.dbt.models_list)
         self.current_phone_model = self.dbt.models_list[0]

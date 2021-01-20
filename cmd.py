@@ -1,5 +1,6 @@
 from os import chdir
 from subprocess import check_output, CalledProcessError, call
+from sys import platform
 
 
 class CommandLine:
@@ -30,10 +31,10 @@ class CommandLine:
     def connection_check(self):
         output = (check_output(['adb', 'devices'])).decode('utf-8')
 
-        output = output.replace('\n', ' ')
-        output = output.replace('\r', ' ')
-
-        output = len(output.split()) - 3
+        if platform == 'linux' or platform == 'linux2':
+            output = len(output.split('\n')) - 3
+        elif platform == 'win32':
+            output = len(output.split('\r\n')) - 3
 
         if output:
             return True

@@ -22,6 +22,21 @@ class ReferenceWindow(QMainWindow):
         uic.loadUi('reference.ui', self)
         self.setWindowIcon(QIcon('res/icon.ico'))
         self.warning.setStyleSheet('color:red')
+        self.resize_widgets()
+
+    def resize_widgets(self):
+        resized_font = self.font()
+
+        resized_font.setPointSize(13)
+        self.label.setFont(resized_font)
+
+        resized_font.setPointSize(11)
+        self.label_2.setFont(resized_font)
+        self.label_3.setFont(resized_font)
+        self.label_4.setFont(resized_font)
+        self.label_5.setFont(resized_font)
+        self.label_6.setFont(resized_font)
+        self.warning.setFont(resized_font)
 
 
 # MAIN WINDOW CLASS
@@ -71,6 +86,8 @@ class MainWindow(QMainWindow):
 
         self.current_load = 0
         self.target_load = 0
+
+        self.resize_widgets()
 
     def load_compatible_apps(self, index):
         self.clear_selected()
@@ -157,6 +174,22 @@ class MainWindow(QMainWindow):
             self.progress_bar.setValue(0)
         else:
             self.progress_bar.setValue(int(100 * self.current_load / self.target_load))
+
+    # FUNCTION FOR RESIZE WIDGETS
+    def resize_widgets(self):
+        resized_font = self.font()
+
+        resized_font.setPointSize(11)
+        self.database_status.setFont(resized_font)
+        self.model_label.setFont(resized_font)
+        self.apps_label.setFont(resized_font)
+
+        resized_font.setPointSize(8)
+        self.clear_selected_button.setFont(resized_font)
+
+        resized_font.setPointSize(7)
+        self.model.setFont(resized_font)
+        self.apps.setFont(resized_font)
 
 
 if __name__ == '__main__':

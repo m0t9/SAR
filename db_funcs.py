@@ -1,6 +1,7 @@
 from os import chdir
 from sqlite3 import connect, OperationalError
 from subprocess import check_call, CalledProcessError
+import requests
 
 
 class DatabaseTaker:
@@ -40,11 +41,11 @@ class DatabaseTaker:
     # DB LOADER
     def load_database(self):
         chdir('res')
-
         try:
-            check_call(['curl', '-OL', 'https://raw.githubusercontent.com/m0t9/SAR/master/res/phones.db'])
-            self.newest_db = True
-        except CalledProcessError:
+            content = (requests.get('https://raw.githubusercontent.com/m0t9/SAR/master/res/phones.db')).content
+            with open(r'phones.db', "wb") as file:
+                file.write(content)
+                self.newest_db = True
+        except Exception:
             pass
-
         chdir('..')

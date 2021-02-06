@@ -20,8 +20,7 @@ class DatabaseTaker:
         try:
             apps_list = [item[0] for item in (
                 self.cursor.execute(
-                    '''SELECT app_name FROM app_packets WHERE ''' + phone_model + ''' = 1 
-                    ORDER BY app_name''').fetchall())]
+                    f'SELECT app_name FROM app_packets WHERE {phone_model} = 1 ORDER BY app_name').fetchall())]
             return apps_list
         except OperationalError:
             return []
@@ -30,7 +29,7 @@ class DatabaseTaker:
     def get_packet_app(self, app_name, phone_model):
         try:
             packet_name = self.cursor.execute(
-                '''SELECT packet_name FROM app_packets WHERE app_name = ? AND ''' + phone_model + ''' = 1''',
+                f'SELECT packet_name FROM app_packets WHERE app_name = ? AND {phone_model} = 1',
                 (app_name,)).fetchone()
             if packet_name:
                 return packet_name[0]

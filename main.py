@@ -148,8 +148,8 @@ class MainWindow(QMainWindow):
             return False
 
     def make_message(self):
-        text = 'Вы действительно хотите удалить '
-        text += ', '.join(self.remove) + ' с Вашего устройства?'
+        applications = ', '.join(self.remove)
+        text = f'Вы действительно хотите удалить {applications} с Вашего устройства?'
         return text
 
     def removal_process(self):

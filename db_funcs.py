@@ -1,6 +1,5 @@
 from os import chdir
 from sqlite3 import connect, OperationalError
-from subprocess import check_call, CalledProcessError
 import requests
 
 

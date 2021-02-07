@@ -6,6 +6,7 @@ import requests
 class DatabaseTaker:
     def __init__(self):
         # TRYING TO LOAD NEWEST DATABASE
+        self.download_link = 'https://github.com/m0t9/SAR/raw/master/res/phones.db'
         self.newest_db = False
         self.load_database()
 
@@ -40,7 +41,7 @@ class DatabaseTaker:
     def load_database(self):
         chdir('res')
         try:
-            content = (requests.get('https://raw.githubusercontent.com/m0t9/SAR/master/res/phones.db')).content
+            content = (requests.get(self.download_link)).content
             with open(r'phones.db', "wb") as file:
                 file.write(content)
                 self.newest_db = True

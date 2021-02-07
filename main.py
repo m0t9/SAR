@@ -45,6 +45,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         uic.loadUi('ui.ui', self)
         self.setWindowIcon(QIcon('res/icon.ico'))
+        self.resize_widgets()
 
         # ASSEMBLING REFERENCE
         self.reference_window = ReferenceWindow()
@@ -56,38 +57,39 @@ class MainWindow(QMainWindow):
         self.dbt = DatabaseTaker()
         self.cmd = CommandLine()
 
-        # CHECKING DB STATUS
-        if self.dbt.newest_db:
-            self.database_status.setText('Подключена новейшая база данных')
-            self.database_status.setStyleSheet('color:#00ff00')
+        if self.cmd.error_message:
+            self.verdict_log.append(self.cmd.error_message)
         else:
-            self.database_status.setText('Подключена устаревшая база данных')
-            self.database_status.setStyleSheet('color:#ff0000')
+            # CHECKING DB STATUS
+            if self.dbt.newest_db:
+                self.database_status.setText('Подключена новейшая база данных')
+                self.database_status.setStyleSheet('color:#00ff00')
+            else:
+                self.database_status.setText('Подключена устаревшая база данных')
+                self.database_status.setStyleSheet('color:#ff0000')
 
-        # LOADING PHONE MODELS AND COMPATIBLE APPS
-        self.model.addItems(self.dbt.models_list)
-        self.current_phone_model = self.dbt.models_list[0]
+            # LOADING PHONE MODELS AND COMPATIBLE APPS
+            self.model.addItems(self.dbt.models_list)
+            self.current_phone_model = self.dbt.models_list[0]
 
-        self.compatible_apps = list()
-        self.remove = list()
+            self.compatible_apps = list()
+            self.remove = list()
 
-        self.model.currentIndexChanged.connect(self.load_compatible_apps)
-        self.load_compatible_apps(0)
+            self.model.currentIndexChanged.connect(self.load_compatible_apps)
+            self.load_compatible_apps(0)
 
-        self.apps.activated.connect(self.add_delete_app)
-        self.remove_apps_button.setStyleSheet('color:red')
-        self.remove_apps_button.clicked.connect(self.remove_selected_apps)
+            self.apps.activated.connect(self.add_delete_app)
+            self.remove_apps_button.setStyleSheet('color:red')
+            self.remove_apps_button.clicked.connect(self.remove_selected_apps)
 
-        self.clear_selected_button.clicked.connect(self.clear_selected)
+            self.clear_selected_button.clicked.connect(self.clear_selected)
 
-        # ASSEMBLING PROGRESS BAR SIGNAL
-        self.pb_signal = ProgressBarSignal(self)
-        self.pb_signal.valueUpdated.connect(self.update_pb)
+            # ASSEMBLING PROGRESS BAR SIGNAL
+            self.pb_signal = ProgressBarSignal(self)
+            self.pb_signal.valueUpdated.connect(self.update_pb)
 
-        self.current_load = 0
-        self.target_load = 0
-
-        self.resize_widgets()
+            self.current_load = 0
+            self.target_load = 0
 
     def load_compatible_apps(self, index):
         self.clear_selected()
@@ -167,7 +169,10 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event):
         self.reference_window.close()
-        self.cmd.close_adb()
+        try:
+            self.cmd.close_adb()
+        except Exception:
+            pass
 
     def update_pb(self):
         if not self.current_load:

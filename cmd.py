@@ -7,16 +7,20 @@ from errors import adb_errors
 class CommandLine:
     # SET ON
     def __init__(self):
+        self.error_message = str()
         try:
             chdir('adb')  # CHANGING DIRECTORY FOR WINDOWS
             call(['adb', 'start-server'])
-        except Exception:
-            print(f'Ошибка запуска adb. Убедитесь, что {adb_errors[platform]}')
-            exit(0)  # BREAK PROGRAM
+        except Exception:  # IF ADB NOT FOUND
+            self.error_message = f'Запуск программы невозможен, ' \
+                                 f'убедитесь, что {adb_errors[platform]}'
 
     # KILL ADB SERVER ON EXIT
     def close_adb(self):
-        call(['adb', 'kill-server'])
+        try:
+            call(['adb', 'kill-server'])
+        except Exception:  # IF ADB NOT LAUNCHED
+            pass
 
     # REMOVE SELECTED APP
     def remove_app(self, app_name, phone_model, dbt):

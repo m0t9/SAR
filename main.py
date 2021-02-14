@@ -31,12 +31,8 @@ class ReferenceWindow(QMainWindow):
         self.label.setFont(resized_font)
 
         resized_font.setPointSize(11)
-        self.label_2.setFont(resized_font)
-        self.label_3.setFont(resized_font)
-        self.label_4.setFont(resized_font)
-        self.label_5.setFont(resized_font)
-        self.label_6.setFont(resized_font)
-        self.warning.setFont(resized_font)
+        for widget in [self.label_2, self.label_3, self.label_4, self.label_5, self.label_6, self.warning]:
+            widget.setFont(resized_font)
 
 
 # MAIN WINDOW CLASS
@@ -171,7 +167,8 @@ class MainWindow(QMainWindow):
         self.reference_window.close()
         try:
             self.cmd.close_adb()
-        except Exception:
+        except Exception as exc:
+            print(exc)
             pass
 
     def update_pb(self):
@@ -185,9 +182,8 @@ class MainWindow(QMainWindow):
         resized_font = self.font()
 
         resized_font.setPointSize(11)
-        self.database_status.setFont(resized_font)
-        self.model_label.setFont(resized_font)
-        self.apps_label.setFont(resized_font)
+        for widget in [self.database_status, self.model_label, self.apps_label]:
+            widget.setFont(resized_font)
 
         resized_font.setPointSize(8)
         self.clear_selected_button.setFont(resized_font)

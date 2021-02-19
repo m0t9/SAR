@@ -1,5 +1,5 @@
 from os import chdir
-from subprocess import call, getstatusoutput
+from subprocess import call, getstatusoutput, check_output
 from sys import platform
 from errors import adb_errors
 
@@ -35,13 +35,16 @@ class CommandLine:
                 return 1
             elif adb_ans[1] == 'Failure [-1000]':
                 return -1
-            return 0
+            elif adb_ans[1] == 'Success':
+                return 0
+            else:
+                return 2
         else:
             return 2
 
     # DEVICE CONNECTION CHECK
     def connection_check(self):
-        output = (getstatusoutput(' '.join(['adb', 'devices'])))[1]
+        output = (check_output(['adb', 'devices'])).decode('utf-8')
 
         if platform == 'linux' or platform == 'linux2':
             output = len(output.split('\n')) - 3

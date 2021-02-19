@@ -168,7 +168,6 @@ class MainWindow(QMainWindow):
         try:
             self.cmd.close_adb()
         except Exception as exc:
-            print(exc)
             pass
 
     def update_pb(self):

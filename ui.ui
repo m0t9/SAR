@@ -60,6 +60,9 @@
       <height>22</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>Нажмите, чтобы выбрать бренд Вашего устройства</string>
+    </property>
     <property name="styleSheet">
      <string notr="true">QComboBox::drop-down { 
 	border-left-width: 0px;
@@ -119,6 +122,9 @@ QComboBox QAbstractItemView {
       <bold>true</bold>
      </font>
     </property>
+    <property name="toolTip">
+     <string>Нажмите, чтобы удалить выбранные приложения</string>
+    </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
 	color: red;
@@ -147,6 +153,9 @@ QPushButton:pressed {
       <width>161</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="toolTip">
+     <string>Нажмите, чтобы добавить/убрать из списка приложения для удаления </string>
     </property>
     <property name="styleSheet">
      <string notr="true">QComboBox::drop-down { 
@@ -225,6 +234,12 @@ QComboBox QAbstractItemView {
       <bold>false</bold>
      </font>
     </property>
+    <property name="toolTip">
+     <string>Нажмите, чтобы очистить список выбранных приложений или результатов удаления</string>
+    </property>
+    <property name="toolTipDuration">
+     <number>-1</number>
+    </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
 	border: solid gray;
@@ -268,6 +283,9 @@ QPushButton:pressed {
       <height>31</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>Процесс удаления</string>
+    </property>
     <property name="styleSheet">
      <string notr="true">QProgressBar
 {
@@ -301,6 +319,9 @@ border-radius :10px;
      <font>
       <pointsize>13</pointsize>
      </font>
+    </property>
+    <property name="toolTip">
+     <string/>
     </property>
     <property name="text">
      <string/>

@@ -3,7 +3,7 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtGui import QIcon
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QFrame
 
 from cmd import CommandLine
 from db_funcs import DatabaseTaker
@@ -46,7 +46,6 @@ class MainWindow(QMainWindow):
         # ASSEMBLING REFERENCE
         self.reference_window = ReferenceWindow()
 
-        self.reference.setStyleSheet('border:0')
         self.reference.clicked.connect(self.show_reference)
 
         # ASSEMBLING COMMAND LINE AND DATABASE TAKER
@@ -67,6 +66,7 @@ class MainWindow(QMainWindow):
             # LOADING PHONE MODELS AND COMPATIBLE APPS
             self.model.addItems(self.dbt.models_list)
             self.current_phone_model = self.dbt.models_list[0]
+            self.verdict_log.setFrameStyle(QFrame.NoFrame)
 
             self.compatible_apps = list()
             self.remove = list()
@@ -75,7 +75,6 @@ class MainWindow(QMainWindow):
             self.load_compatible_apps(0)
 
             self.apps.activated.connect(self.add_delete_app)
-            self.remove_apps_button.setStyleSheet('color:red')
             self.remove_apps_button.clicked.connect(self.remove_selected_apps)
 
             self.clear_selected_button.clicked.connect(self.clear_selected)
@@ -134,7 +133,7 @@ class MainWindow(QMainWindow):
 
         self.verdict_log.clear()
         self.remove.clear()
-        self.verdict_log.setStyleSheet('color:#000000')
+        self.verdict_log.setStyleSheet('''color:#000000''')
 
     def confirmation(self):
         answer = QMessageBox.question(self, 'Подтверждение', self.make_message(),

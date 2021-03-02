@@ -78,6 +78,7 @@ QComboBox {
 	background-color: #dedede;
 }
 QComboBox QAbstractItemView {
+    selection-background-color: #898989;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
     background: #dedede;
@@ -172,6 +173,7 @@ QComboBox {
 	background-color: #dedede;
 }
 QComboBox QAbstractItemView {
+    selection-background-color: #898989;
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
     background: #dedede;
@@ -229,7 +231,7 @@ QComboBox QAbstractItemView {
     </property>
     <property name="font">
      <font>
-      <pointsize>10</pointsize>
+      <pointsize>8</pointsize>
       <weight>50</weight>
       <bold>false</bold>
      </font>
@@ -325,6 +327,38 @@ border-radius :10px;
     </property>
     <property name="text">
      <string/>
+    </property>
+   </widget>
+   <widget class="QLabel" name="mask_top">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>116</y>
+      <width>431</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>res/top_mask.png</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="mask_bottom">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>268</y>
+      <width>431</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>res/bottom_mask.png</pixmap>
     </property>
    </widget>
   </widget>

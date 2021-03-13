@@ -7,7 +7,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QFrame
 
 from cmd import CommandLine
 from db_funcs import DatabaseTaker
-from errors import make_verdict
+from errors import make_verdict, colors
 
 
 # SIGNAL FOR PROGRESS BAR
@@ -21,7 +21,7 @@ class ReferenceWindow(QMainWindow):
         super().__init__()
         uic.loadUi('reference.ui', self)
         self.setWindowIcon(QIcon('res/icon.ico'))
-        self.warning.setStyleSheet('color:red')
+        self.warning.setStyleSheet(colors["fail"])
         self.resize_widgets()
 
     def resize_widgets(self):
@@ -58,10 +58,10 @@ class MainWindow(QMainWindow):
             # CHECKING DB STATUS
             if self.dbt.newest_db:
                 self.database_status.setText('Подключена новейшая база данных')
-                self.database_status.setStyleSheet('color:#00ff00')
+                self.database_status.setStyleSheet(colors['success'])
             else:
                 self.database_status.setText('Подключена устаревшая база данных')
-                self.database_status.setStyleSheet('color:#ff0000')
+                self.database_status.setStyleSheet(colors['fail'])
 
             # LOADING PHONE MODELS AND COMPATIBLE APPS
             self.model.addItems(self.dbt.models_list)
@@ -103,7 +103,7 @@ class MainWindow(QMainWindow):
         self.update_pb()
 
         self.verdict_log.clear()
-        self.verdict_log.setStyleSheet('color:#000000')
+        self.verdict_log.setStyleSheet(colors['default'])
         self.clear_selected_button.setText('Очистить выбранное')
 
         application = self.compatible_apps[index]
@@ -133,7 +133,7 @@ class MainWindow(QMainWindow):
 
         self.verdict_log.clear()
         self.remove.clear()
-        self.verdict_log.setStyleSheet('''color:#000000''')
+        self.verdict_log.setStyleSheet(colors['default'])
 
     def confirmation(self):
         answer = QMessageBox.question(self, 'Подтверждение', self.make_message(),

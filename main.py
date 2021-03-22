@@ -1,13 +1,16 @@
 import sys
 
+from cmd import CommandLine, hide_shell
+from db_funcs import DatabaseTaker
+from errors import make_verdict, colors
+
+if sys.platform == 'win32':  # HIDE SHELL WINDOW (ONLY WIN32)
+    hide_shell()
+
 from PyQt5 import uic
 from PyQt5.QtCore import QObject, pyqtSignal
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QFrame
-
-from cmd import CommandLine, hide_shell
-from db_funcs import DatabaseTaker
-from errors import make_verdict, colors
 
 
 # SIGNAL FOR PROGRESS BAR
@@ -38,9 +41,6 @@ class ReferenceWindow(QMainWindow):
 # MAIN WINDOW CLASS
 class MainWindow(QMainWindow):
     def __init__(self):
-        if sys.platform == 'win32':  # HIDE SHELL WINDOW (ONLY WIN32)
-            hide_shell()
-
         super().__init__()
         uic.loadUi('ui.ui', self)
         self.setWindowIcon(QIcon('res/icon.ico'))

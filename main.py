@@ -18,6 +18,7 @@ class ProgressBarSignal(QObject):
     valueUpdated = pyqtSignal(int)
 
 
+'''
 # REFERENCE WINDOW CLASS
 class ReferenceWindow(QMainWindow):
     def __init__(self):
@@ -36,6 +37,7 @@ class ReferenceWindow(QMainWindow):
         resized_font.setPointSize(11)
         for widget in [self.label_2, self.label_3, self.label_4, self.label_5, self.label_6, self.warning]:
             widget.setFont(resized_font)
+'''
 
 
 # MAIN WINDOW CLASS
@@ -47,9 +49,9 @@ class MainWindow(QMainWindow):
         self.resize_widgets()
 
         # ASSEMBLING REFERENCE
-        self.reference_window = ReferenceWindow()
+        # self.reference_window = ReferenceWindow()
 
-        self.reference.clicked.connect(self.show_reference)
+        # self.reference.clicked.connect(self.show_reference)
 
         # ASSEMBLING COMMAND LINE AND DATABASE TAKER
         self.dbt = DatabaseTaker()
@@ -124,8 +126,10 @@ class MainWindow(QMainWindow):
             if self.confirmation():
                 self.removal_process()
 
+    '''
     def show_reference(self):
         self.reference_window.show()
+    '''
 
     def clear_selected(self):
         self.current_load = 0
@@ -139,10 +143,57 @@ class MainWindow(QMainWindow):
         self.verdict_log.setStyleSheet(colors['default'])
 
     def confirmation(self):
-        answer = QMessageBox.question(self, 'Подтверждение', self.make_message(),
-                                      QMessageBox.Yes,
-                                      QMessageBox.No)
-        if answer == QMessageBox.Yes:
+        answer = QMessageBox(self)
+        answer.setIcon(QMessageBox.Warning)
+        answer.setWindowTitle('Подтвердите удаление')
+        answer.setText(self.make_message())
+
+        accept = answer.addButton('Да', QMessageBox.AcceptRole)
+        reject = answer.addButton('Нет', QMessageBox.RejectRole)
+
+        answer.setDefaultButton(accept)
+
+        accept.setStyleSheet('''QPushButton {
+                                border: solid gray;
+                                font-weight: bold;
+                                color: red;
+                                font-size: 20px;
+                                padding-top: 5px;
+                                padding-bottom: 5px;
+                                padding-left: 20px;
+                                padding-right: 20px;
+                                border-radius: 10;
+                                background-color: #dedede;
+                                }
+                                QPushButton:hover {
+                                    background-color: #cccccc;
+                                }
+                            
+                                QPushButton:pressed {
+                                    background-color: #c4c4c4;
+                                }''')
+        reject.setStyleSheet('''QPushButton {
+                                border: solid gray;
+                                border-radius: 10;
+                                padding-top: 5px;
+                                padding-bottom: 5px;
+                                padding-left: 20px;
+                                padding-right: 20px;
+                                font-size: 20px;
+                                background-color: #dedede;
+                                }
+                                QPushButton:hover {
+                                    background-color: #cccccc;
+                                }
+
+                                QPushButton:pressed {
+                                    background-color: #c4c4c4;
+                                }''')
+
+        answer.exec()
+        answer.deleteLater()
+
+        if answer.clickedButton() is accept:
             return True
         else:
             return False
@@ -166,7 +217,7 @@ class MainWindow(QMainWindow):
         self.clear_selected_button.setText('Очистить журнал')
 
     def closeEvent(self, event):
-        self.reference_window.close()
+        # self.reference_window.close()
         try:
             self.cmd.close_adb()
         except Exception as exc:

@@ -44,6 +44,7 @@
     </property>
     <property name="font">
      <font>
+      <family>Segoe UI</family>
       <pointsize>13</pointsize>
      </font>
     </property>
@@ -59,6 +60,11 @@
       <width>161</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI</family>
+     </font>
     </property>
     <property name="toolTip">
      <string>Нажмите, чтобы выбрать бренд Вашего устройства</string>
@@ -100,6 +106,7 @@ QComboBox QAbstractItemView {
     </property>
     <property name="font">
      <font>
+      <family>Segoe UI</family>
       <pointsize>13</pointsize>
      </font>
     </property>
@@ -118,6 +125,7 @@ QComboBox QAbstractItemView {
     </property>
     <property name="font">
      <font>
+      <family>Segoe UI</family>
       <pointsize>10</pointsize>
       <weight>75</weight>
       <bold>true</bold>
@@ -154,6 +162,11 @@ QPushButton:pressed {
       <width>161</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI</family>
+     </font>
     </property>
     <property name="toolTip">
      <string>Нажмите, чтобы добавить/убрать из списка приложения для удаления </string>
@@ -231,6 +244,7 @@ QComboBox QAbstractItemView {
     </property>
     <property name="font">
      <font>
+      <family>Segoe UI</family>
       <pointsize>8</pointsize>
       <weight>50</weight>
       <bold>false</bold>
@@ -268,6 +282,12 @@ QPushButton:pressed {
       <width>431</width>
       <height>161</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI</family>
+      <pointsize>8</pointsize>
+     </font>
     </property>
     <property name="styleSheet">
      <string notr="true"/>
@@ -319,7 +339,10 @@ border-radius :10px;
     </property>
     <property name="font">
      <font>
+      <family>Segoe UI</family>
       <pointsize>13</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
      </font>
     </property>
     <property name="toolTip">

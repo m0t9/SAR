@@ -9,8 +9,9 @@ if sys.platform == 'win32':  # HIDE SHELL WINDOW (ONLY WIN32)
 
 from PyQt5 import uic
 from PyQt5.QtCore import QObject, pyqtSignal
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QFrame
+from PyQt5.Qt import QUrl, QDesktopServices
 
 
 # SIGNAL FOR PROGRESS BAR
@@ -84,6 +85,8 @@ class MainWindow(QMainWindow):
 
             self.clear_selected_button.clicked.connect(self.clear_selected)
 
+            self.reference.clicked.connect(self.go_to_source)
+
             # ASSEMBLING PROGRESS BAR SIGNAL
             self.pb_signal = ProgressBarSignal(self)
             self.pb_signal.valueUpdated.connect(self.update_pb)
@@ -147,9 +150,9 @@ class MainWindow(QMainWindow):
         answer.setIcon(QMessageBox.Warning)
         answer.setWindowTitle('Подтвердите удаление')
         answer.setText(self.make_message())
-
         accept = answer.addButton('Да', QMessageBox.AcceptRole)
         reject = answer.addButton('Нет', QMessageBox.RejectRole)
+        answer.setFont(QFont('Segoe UI', 9))
 
         answer.setDefaultButton(accept)
 
@@ -157,7 +160,7 @@ class MainWindow(QMainWindow):
                                 border: solid gray;
                                 font-weight: bold;
                                 color: red;
-                                font-size: 20px;
+                                font-size: 18px;
                                 padding-top: 5px;
                                 padding-bottom: 5px;
                                 padding-left: 20px;
@@ -174,12 +177,13 @@ class MainWindow(QMainWindow):
                                 }''')
         reject.setStyleSheet('''QPushButton {
                                 border: solid gray;
+                                font-weight: bold;
                                 border-radius: 10;
                                 padding-top: 5px;
                                 padding-bottom: 5px;
                                 padding-left: 20px;
                                 padding-right: 20px;
-                                font-size: 20px;
+                                font-size: 18px;
                                 background-color: #dedede;
                                 }
                                 QPushButton:hover {
@@ -243,6 +247,11 @@ class MainWindow(QMainWindow):
         resized_font.setPointSize(7)
         self.model.setFont(resized_font)
         self.apps.setFont(resized_font)
+
+    # OPEN WEB BROWSER WITH GITHUB
+    def go_to_source(self):
+        url = QUrl("https://github.com/m0t9/SAR")
+        QDesktopServices.openUrl(url)
 
 
 if __name__ == '__main__':

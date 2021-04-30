@@ -1,4 +1,4 @@
-# SAR (System App Remover) - this is an application with which You can remove system programs from your Android device.
+# SAR (System App Remover) - this is an application which can help with uninstalling system programs on Your Android-device.
 
 ## Installation
 

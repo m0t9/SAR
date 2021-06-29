@@ -39,7 +39,7 @@ class CommandLine:
 
         app_packet = dbt.get_packet_app(app_name, phone_model)
         if app_packet:
-            adb_ans = getstatusoutput(' '.join(['adb', 'shell', 'pm', 'uninstall', '-k', '--user 0', app_packet]))
+            adb_ans = getstatusoutput(' '.join(['adb', 'shell', 'pm', 'uninstall', '--user 0', app_packet]))
             if adb_ans[1] == 'Failure [not installed for 0]':  # NO INSTALLED
                 return 1
             elif adb_ans[1] == 'Failure [-1000]':  # NO ACCESS

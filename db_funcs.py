@@ -39,12 +39,10 @@ class DatabaseTaker:
 
     # DB LOADER
     def load_database(self):
-        chdir('res')
         try:
             content = (requests.get(self.download_link)).content
-            with open(r'phones.db', "wb") as file:
+            with open(r'res/phones.db', "wb") as file:
                 file.write(content)
                 self.newest_db = True
         except Exception:
             pass
-        chdir('..')
